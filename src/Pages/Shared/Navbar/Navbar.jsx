@@ -11,7 +11,7 @@ const Navbar = () => {
         <li><NavLink className={({ isActive }) => isActive ? "bg-sky-900 rounded-md text-white  font-bold" : undefined} to="/login">Login</NavLink></li>
     </React.Fragment>
     return (
-        <navbar className="navbar bg-base-200">
+        <nav className="navbar bg-base-200">
             <div className="w-11/12 mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -33,7 +33,7 @@ const Navbar = () => {
                 <a className="btn">Get started</a>
             </div> */}
             </div>
-        </navbar>
+        </nav>
     );
 };
 
