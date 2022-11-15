@@ -2,13 +2,18 @@ import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Routes/Routes/Routes';
 import 'react-day-picker/dist/style.css';
+import AuthProvider from './Contex/AuthProvider';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   return (
     <div>
-      <RouterProvider router={router}>
+      <Toaster />
+      <AuthProvider>
+        <RouterProvider router={router}>
 
-      </RouterProvider>
+        </RouterProvider>
+      </AuthProvider>
     </div>
   );
 };

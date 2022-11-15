@@ -14,7 +14,7 @@ const ContactUs = () => {
         setContactData({ ...contactData, [e.target.name]: e.target.value })
     }
 
-    console.log(contactData);
+
 
     return (
         <div className='my-16'
