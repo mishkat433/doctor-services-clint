@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SmallSpinner from '../../components/SmallSpinner';
 import SocialLogin from '../../components/SocialLogin';
 import { AuthContex } from '../../Contex/AuthProvider';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { signIn } = useContext(AuthContex);
+    const { signIn, loading, setLoading } = useContext(AuthContex);
     const [loginError, setLoginError] = useState('')
 
     const location = useLocation();
@@ -24,7 +25,8 @@ const Login = () => {
             })
             .catch(err => {
                 setLoginError(err.message)
-                toast.error("Something Wrong")
+                toast.error("Something Wrong", err.message)
+                setLoading(false)
             })
     }
 
@@ -44,12 +46,15 @@ const Login = () => {
                         {errors.password && <p role="alert" className='text-red-600'>{errors.password?.message}</p>}
                         <span>Forget password?</span>
                     </div>
-                    <input type="submit" className='btn btn-info w-full mt-3' value='Login' />
+                    {
+                        loading ? <button className='btn btn-info w-full mt-3'><SmallSpinner /> </button> :
+                            <input type="submit" className='btn btn-info w-full mt-3' value='Login' />
+                    }
                     <div>
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>
                 </form>
-                <p>New to Doctors Portal <Link to='/signup' className='text-secondary'>Create an Account </Link> </p>
+                <p>New to Doctors Portal <Link to='/signUp' className='text-secondary'>Create an Account </Link> </p>
                 <div className="divider">OR</div>
                 <SocialLogin />
             </div>

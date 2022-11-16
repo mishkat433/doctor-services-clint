@@ -5,6 +5,7 @@ import 'react-day-picker/dist/style.css';
 import AuthProvider from './Contex/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 
+
 const App = () => {
   return (
     <div>

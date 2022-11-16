@@ -4,6 +4,7 @@ import Appointment from "../../Pages/Appointments/Appointment/Appointment";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import NotFound from "../../Pages/NotFound/NotFound";
 import SignUp from "../../Pages/SignUp/SignUp";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -11,6 +12,7 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout />,
+        errorElement: <NotFound />,
         children: [
             {
                 path: '/',
@@ -31,11 +33,12 @@ export const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp />
-            },
-            {
-                path: '/dashboard',
-                element: <Dashboard />
             }
         ]
+    },
+    {
+        path: "/dashboard",
+        element: <Dashboard />,
+        errorElement: <NotFound />,
     }
 ])

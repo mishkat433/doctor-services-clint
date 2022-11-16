@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
+import { AuthContex } from '../../../Contex/AuthProvider';
+import toast from 'react-hot-toast';
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
+    const { loginUser } = useContext(AuthContex)
     const date = format(selectedDate, 'PP')
 
     const bookingHandle = (e) => {
@@ -21,9 +24,27 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
             phone,
         }
 
-        console.log(booking);
+        fetch("http://localhost:5200/bookings", {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    setTreatment(null)
+                    toast.success("Booking Confirmed")
+                    refetch()
+                }
+                else {
+                    toast.error(data.message)
+                    setTreatment(null)
+                }
+            })
 
-        setTreatment(null)
+
         e.preventDefault()
     }
 
@@ -37,7 +58,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
                     <div className="card mt-5 w-full  ">
                         <form onSubmit={bookingHandle} className="card-body">
                             <div className="form-control">
-                                <input type="text" value={date} name='date' className="input input-bordered" disabled />
+                                <input type="text" defaultValue={date} name='date' className="input input-bordered" disabled />
                             </div>
                             <select name="slot" className="select select-bordered w-full">
                                 {
@@ -48,10 +69,10 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
                                 }
                             </select>
                             <div className="form-control">
-                                <input type="text" placeholder="your name" name='name' className="input input-bordered" required />
+                                <input type="text" placeholder="your name" defaultValue={loginUser?.displayName} disabled name='name' className="input input-bordered" required />
                             </div>
                             <div className="form-control">
-                                <input type="email" placeholder="email" name='email' className="input input-bordered" required />
+                                <input type="email" placeholder="email" defaultValue={loginUser?.email} disabled name='email' className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <input type="number" placeholder="phone number" name='phone' className="input input-bordered" required />

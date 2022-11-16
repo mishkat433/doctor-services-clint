@@ -15,14 +15,14 @@ const Navbar = () => {
         <li><NavLink className={({ isActive }) => isActive ? "bg-sky-900 rounded-md text-white  font-bold" : undefined} to="/contactUs">Contact Us</NavLink></li>
         {
             loginUser?.uid ?
-                <div className="dropdown dropdown-bottom dropdown-end">
+                <div className="dropdown dropdown-bottom dropdown-end ">
                     <label tabIndex={0} className=" rounded-full flex gap-3 items-center">
                         <img className='w-10 h-10 rounded-full' src={loginUser?.photoURL ? loginUser.photoURL : notfound} alt="" />
                         <FaAngleDown />
                     </label>
                     <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li className='flex flex-col'><h4 className='font-semibold'>{loginUser?.displayName}</h4><p>{loginUser?.email}</p></li>
-                        <li><Link>Dashboard</Link></li>
+                        <li className='flex flex-col'><h4 className='font-semibold text-xl py-0'>{loginUser?.displayName}</h4><p className='py-0'>{loginUser?.email}</p></li>
+                        <li><Link to="/dashboard">Dashboard</Link></li>
                         <li><button onClick={logOut} className=''>Sign Out</button></li>
                     </ul>
                 </div>
